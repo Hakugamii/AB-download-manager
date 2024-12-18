@@ -23,6 +23,7 @@ data class AppSettingsModel(
     val useServerLastModifiedTime: Boolean = false,
     val useSparseFileAllocation: Boolean = true,
     val useAverageSpeed: Boolean = true,
+    val retryWhenError: Boolean = true,
     val showDownloadProgressDialog: Boolean = true,
     val showDownloadCompletionDialog: Boolean = true,
     val speedLimit: Long = 0,
@@ -50,6 +51,7 @@ data class AppSettingsModel(
             val useServerLastModifiedTime = booleanKeyOf("useServerLastModifiedTime")
             val useSparseFileAllocation = booleanKeyOf("useSparseFileAllocation")
             val useAverageSpeed = booleanKeyOf("useAverageSpeed")
+            val retryWhenError = booleanKeyOf("retryWhenError")
             val showDownloadProgressDialog = booleanKeyOf("showDownloadProgressDialog")
             val showDownloadCompletionDialog = booleanKeyOf("showDownloadCompletionDialog")
             val speedLimit = longKeyOf("speedLimit")
@@ -75,6 +77,7 @@ data class AppSettingsModel(
                     ?: default.useServerLastModifiedTime,
                 useSparseFileAllocation = source.get(Keys.useSparseFileAllocation) ?: default.useSparseFileAllocation,
                 useAverageSpeed = source.get(Keys.useAverageSpeed) ?: default.useAverageSpeed,
+                retryWhenError = source.get(Keys.retryWhenError) ?: default.retryWhenError,
                 showDownloadProgressDialog = source.get(Keys.showDownloadProgressDialog)
                     ?: default.showDownloadProgressDialog,
                 showDownloadCompletionDialog = source.get(Keys.showDownloadCompletionDialog)
@@ -101,6 +104,7 @@ data class AppSettingsModel(
                 put(Keys.useServerLastModifiedTime, focus.useServerLastModifiedTime)
                 put(Keys.useSparseFileAllocation, focus.useSparseFileAllocation)
                 put(Keys.useAverageSpeed, focus.useAverageSpeed)
+                put(Keys.retryWhenError, focus.retryWhenError)
                 put(Keys.showDownloadProgressDialog, focus.showDownloadProgressDialog)
                 put(Keys.showDownloadCompletionDialog, focus.showDownloadCompletionDialog)
                 put(Keys.speedLimit, focus.speedLimit)
@@ -139,6 +143,7 @@ class AppSettingsStorage(
     val useServerLastModifiedTime = from(AppSettingsModel.useServerLastModifiedTime)
     val useSparseFileAllocation = from(AppSettingsModel.useSparseFileAllocation)
     val useAverageSpeed = from(AppSettingsModel.useAverageSpeed)
+    val retryWhenError = from(AppSettingsModel.retryWhenError)
     val showDownloadProgressDialog = from(AppSettingsModel.showDownloadProgressDialog)
     val showDownloadCompletionDialog = from(AppSettingsModel.showDownloadCompletionDialog)
     val speedLimit = from(AppSettingsModel.speedLimit)

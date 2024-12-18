@@ -38,6 +38,7 @@ class AppRepository : KoinComponent {
     val useServerLastModifiedTime = appSettings.useServerLastModifiedTime
     val useSparseFileAllocation = appSettings.useSparseFileAllocation
     val useAverageSpeed = appSettings.useAverageSpeed
+    val retryWhenError = appSettings.retryWhenError
     val saveLocation = appSettings.defaultDownloadFolder
     val integrationEnabled = appSettings.browserIntegrationEnabled
     val integrationPort = appSettings.browserIntegrationPort
@@ -61,6 +62,12 @@ class AppRepository : KoinComponent {
             .onEach {
                 downloadMonitor.useAverageSpeed = it
             }.launchIn(scope)
+        retryWhenError
+            .debounce(500)
+            .onEach {
+                downloadSettings.retryWhenError = it
+                downloadManager.reloadSetting()
+            }
         threadCount
             .debounce(500)
             .onEach {

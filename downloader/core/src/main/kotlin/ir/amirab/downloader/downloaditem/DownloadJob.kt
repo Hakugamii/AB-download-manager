@@ -257,7 +257,6 @@ class DownloadJob(
                 pause()
                 resume()
             }
-
         }
     }
 
@@ -457,9 +456,12 @@ class DownloadJob(
         } else {
             downloadItem.status = DownloadStatus.Error
         }
-        _isDownloadActive.update { false }
         saveState()
+        _isDownloadActive.update { false }
         downloadManager.onDownloadCanceled(downloadItem, throwable)
+        if (downloadManager.settings.retryWhenError) {
+            resume()
+        }
     }
 
     private fun onDownloadFinished() {

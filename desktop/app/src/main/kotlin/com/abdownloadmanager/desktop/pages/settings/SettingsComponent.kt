@@ -170,6 +170,17 @@ fun useAverageSpeedConfig(appRepository: AppRepository): BooleanConfigurable {
     )
 }
 
+fun retryWhenError(appRepository: AppRepository): BooleanConfigurable {
+    return BooleanConfigurable(
+        title = Res.string.settings_retry_when_error.asStringSource(),
+        description = Res.string.settings_retry_when_error_description.asStringSource(),
+        backedBy = appRepository.retryWhenError,
+        describe = {
+            (if (it) Res.string.enabled else Res.string.disabled).asStringSource()
+        }
+    )
+}
+
 fun defaultDownloadFolderConfig(appSettings: AppSettingsStorage): FolderConfigurable {
     return FolderConfigurable(
         title = Res.string.settings_default_download_folder.asStringSource(),
@@ -418,6 +429,7 @@ class SettingsComponent(
                     showDownloadFinishWindow(appSettings),
                     useServerLastModified(appRepository),
                     useSparseFileAllocation(appRepository),
+                    retryWhenError(appRepository),
                     trackDeletedFilesOnDisk(appRepository),
                 )
             }

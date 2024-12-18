@@ -7,5 +7,6 @@ data class DownloadSettings(
     var useServerLastModifiedTime: Boolean = false,
     var globalSpeedLimit: Long = 0,//unlimited
     var useSparseFileAllocation: Boolean = true,
+    var retryWhenError: Boolean = true,
     val minPartSize: Long = 2048,//2kB
 )
