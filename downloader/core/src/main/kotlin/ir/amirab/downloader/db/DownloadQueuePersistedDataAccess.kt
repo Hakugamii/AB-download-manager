@@ -13,7 +13,8 @@ data class QueueModel(
     val maxConcurrent: Int = 2,
     val queueItems: List<Long> = emptyList(),
     val scheduledTimes: ScheduleTimes = ScheduleTimes.default(),
-    val stopQueueOnEmpty:Boolean=false,
+    val stopQueueOnEmpty: Boolean = false,
+    val mainQueue: Boolean = false
 )
 /**
  * CRUD all queues

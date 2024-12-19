@@ -171,13 +171,21 @@ fun AddDownloadPage(
             ShowSolutionsOnDuplicateDownload(component)
         }
         if (component.shouldShowAddToQueue) {
-            ShowAddToQueueDialog(
-                queueList = component.queues.collectAsState().value,
-                onClose = { component.shouldShowAddToQueue = false },
-                onQueueSelected = {
-                    component.onRequestAddToQueue(it)
+            val defaultQueue = component.queues.collectAsState().value.find { it.mainQueue == true }
+            if (defaultQueue!= null) {
+                if (!defaultQueue.isQueueActive) {
+                    defaultQueue.autoboot()
                 }
-            )
+                component.onRequestAddToQueue(defaultQueue.id)
+            } else {
+                ShowAddToQueueDialog(
+                    queueList = component.queues.collectAsState().value,
+                    onClose = { component.shouldShowAddToQueue = false },
+                    onQueueSelected = {
+                        component.onRequestAddToQueue(it)
+                    }
+                )
+            }
         }
         if (component.showMoreSettings) {
             ExtraConfig(

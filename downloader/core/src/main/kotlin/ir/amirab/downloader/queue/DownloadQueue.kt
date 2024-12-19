@@ -33,6 +33,8 @@ class DownloadQueue(
     val id: Long = getQueueModel().id
     private val stopQueueOnEmpty: Boolean
         get() = getQueueModel().stopQueueOnEmpty
+    val mainQueue: Boolean
+        get() = getQueueModel().mainQueue
     private val maxConcurrent
         get() = getQueueModel().maxConcurrent
     private val scheduleTimes: ScheduleTimes
@@ -53,7 +55,14 @@ class DownloadQueue(
         startListenerJob()
         setupAutoStartAndStop()
         setupAutoSave()
+
         booted = true
+    }
+
+    fun autoboot() {
+        scope.launch {
+            start()
+        }
     }
 
     private fun setupAutoSave() {
@@ -255,6 +264,15 @@ class DownloadQueue(
     fun setMaxConcurrent(value: Int) {
         _queueModel.update {
             it.copy(maxConcurrent = value)
+        }
+        shake()
+    }
+
+    fun setMainQueue(enabled: Boolean) {
+        _queueModel.update {
+            it.copy(
+                mainQueue = enabled
+            )
         }
         shake()
     }

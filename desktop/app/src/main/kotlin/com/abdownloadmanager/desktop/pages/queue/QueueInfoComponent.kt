@@ -143,10 +143,32 @@ class QueueInfoComponent(
                             },
                         ),
                         describe = {
-                            if (it) Res.string.enabled.asStringSource()
-                            else Res.string.disabled.asStringSource()
+                            if (it) Res.string.enabled.asStringSource() else Res.string.disabled.asStringSource()
                         },
                     ),
+                    BooleanConfigurable(
+                        Res.string.queue_set_as_main.asStringSource(),
+                        Res.string.queue_set_as_main_description.asStringSource(),
+                        backedBy = createMutableStateFlowFromStateFlow(
+                            scope = scope,
+                            flow = downloadQueue.queueModel.mapStateFlow() {
+                                it.mainQueue
+                            },
+                            updater = { newValue ->
+                                if (newValue) {
+                                    queueManager.queues.value.forEach { queue ->
+                                        if (queue.id != downloadQueue.id) {
+                                            queue.setMainQueue(false)
+                                        }
+                                    }
+                                }
+                                downloadQueue.setMainQueue(newValue)
+                            },
+                        ),
+                        describe = {
+                            if (it) Res.string.enabled.asStringSource() else Res.string.disabled.asStringSource()
+                        }
+                    )
                 ),
             ),
             ConfigurableGroup(
