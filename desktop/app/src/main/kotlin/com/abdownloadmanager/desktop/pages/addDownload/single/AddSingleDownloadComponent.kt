@@ -10,7 +10,7 @@ import com.abdownloadmanager.desktop.utils.*
 import androidx.compose.runtime.*
 import com.abdownloadmanager.desktop.pages.settings.ThreadCountLimitation
 import com.abdownloadmanager.desktop.pages.settings.configurable.FileChecksumConfigurable
-import com.abdownloadmanager.desktop.pages.settings.configurable.widgets.RenderFileChecksumConfig
+import com.abdownloadmanager.desktop.storage.AppSettingsStorage
 import com.abdownloadmanager.shared.utils.mvi.ContainsEffects
 import com.abdownloadmanager.shared.utils.mvi.supportEffects
 import com.abdownloadmanager.resources.Res
