@@ -35,6 +35,7 @@ data class AppSettingsModel(
     val browserIntegrationPort: Int = 15151,
     val trackDeletedFilesOnDisk: Boolean = false,
     val useBitsForSpeed: Boolean = false,
+    val ignoreSSLCertificates: Boolean = false,
 ) {
     companion object {
         val default: AppSettingsModel get() = AppSettingsModel()
@@ -62,6 +63,7 @@ data class AppSettingsModel(
             val browserIntegrationPort = intKeyOf("browserIntegrationPort")
             val trackDeletedFilesOnDisk = booleanKeyOf("trackDeletedFilesOnDisk")
             val useBitsForSpeed = booleanKeyOf("useBitsForSpeed")
+            val ignoreSSLCertificates = booleanKeyOf("ignoreSSLCertificates")
         }
 
 
@@ -92,6 +94,7 @@ data class AppSettingsModel(
                 browserIntegrationPort = source.get(Keys.browserIntegrationPort) ?: default.browserIntegrationPort,
                 trackDeletedFilesOnDisk = source.get(Keys.trackDeletedFilesOnDisk) ?: default.trackDeletedFilesOnDisk,
                 useBitsForSpeed = source.get(Keys.useBitsForSpeed) ?: default.useBitsForSpeed,
+                ignoreSSLCertificates = source.get(Keys.ignoreSSLCertificates) ?: default.ignoreSSLCertificates,
             )
         }
 
@@ -117,6 +120,7 @@ data class AppSettingsModel(
                 put(Keys.browserIntegrationPort, focus.browserIntegrationPort)
                 put(Keys.trackDeletedFilesOnDisk, focus.trackDeletedFilesOnDisk)
                 put(Keys.useBitsForSpeed, focus.useBitsForSpeed)
+                put(Keys.ignoreSSLCertificates, focus.ignoreSSLCertificates)
             }
         }
     }
@@ -166,4 +170,5 @@ class AppSettingsStorage(
     val browserIntegrationPort = from(AppSettingsModel.browserIntegrationPort)
     val trackDeletedFilesOnDisk = from(AppSettingsModel.trackDeletedFilesOnDisk)
     val useBitsForSpeed = from(AppSettingsModel.useBitsForSpeed)
+    val ignoreSSLCertificates = from(AppSettingsModel.ignoreSSLCertificates)
 }
