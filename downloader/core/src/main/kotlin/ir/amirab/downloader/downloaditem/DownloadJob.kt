@@ -453,14 +453,17 @@ class DownloadJob(
         _status.update { DownloadJobStatus.Canceled(throwable) }
         if (ExceptionUtils.isNormalCancellation(throwable)) {
             downloadItem.status = DownloadStatus.Paused
+            saveState()
+            _isDownloadActive.update { false }
+            downloadManager.onDownloadCanceled(downloadItem, throwable)
         } else {
             downloadItem.status = DownloadStatus.Error
-        }
-        saveState()
-        _isDownloadActive.update { false }
-        downloadManager.onDownloadCanceled(downloadItem, throwable)
-        if (downloadManager.settings.retryWhenError) {
-            resume()
+            saveState()
+            _isDownloadActive.update { false }
+            downloadManager.onDownloadCanceled(downloadItem, throwable)
+            if (downloadManager.settings.retryWhenError) {
+                resume()
+            }
         }
     }
 
